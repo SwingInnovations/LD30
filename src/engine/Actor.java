@@ -229,6 +229,10 @@ public class Actor implements Entity{
         return poly;
     }
 
+    public Foot GetFoot(){
+        return foot;
+    }
+    
     @Override
     public int GetDirection() {
         return direction;
@@ -236,6 +240,10 @@ public class Actor implements Entity{
     
     public int GetHealth(){
         return health;
+    }
+    
+    public boolean OnGround(){
+        return onGround;
     }
     
     public boolean HasIntersected(Entity other){

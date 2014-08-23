@@ -12,11 +12,13 @@ public class Block implements Entity{
     private Vector2f dimension;
     private Polygon poly;
     private Image image;
+    private boolean isVoid;
     
     public Block(Vector2f pos, Vector2f dim){
         this.SetPos(pos);
         this.SetDim(dim);
         this.InitPoly();
+        isVoid = false;
     }
     
     public void SetX(float _x){this.position.x = _x; this.poly.setX(_x);}
@@ -26,7 +28,7 @@ public class Block implements Entity{
     public void SetPos(Vector2f pos) {
         this.position = pos;
     }
-
+    
     @Override
     public void SetDim(Vector2f dim) {
         this.dimension = dim;
@@ -40,6 +42,17 @@ public class Block implements Entity{
             position.x + dimension.x, position.y + dimension.y,
             position.x + dimension.x, position.y
         });
+    }
+    
+    public void SetVoid(boolean val){
+        this.isVoid = val;
+    }
+    
+    public void Update(int delta){
+        if(IsVoid() && position.y <= 2000){
+            position.y += 0.25f * delta;
+            poly.setY(position.y);
+        }
     }
     
     public void Render(Graphics g){
@@ -78,6 +91,10 @@ public class Block implements Entity{
         }else{
             return false;
         }
+    }
+    
+    public boolean IsVoid(){
+        return isVoid;
     }
     
 }

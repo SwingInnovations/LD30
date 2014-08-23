@@ -4,7 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Enemy.java</file>
+            <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Weapon.java</file>
+            <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Foot.java</file>
             <file>file:/E:/SwingInnovations/Software/Games/LD30/src/runtime/LD30.java</file>
+            <file>file:/E:/SwingInnovations/Software/Games/LD30/src/levels/Arena_1.java</file>
+            <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Drop.java</file>
+            <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Block.java</file>
             <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Entity.java</file>
             <file>file:/E:/SwingInnovations/Software/Games/LD30/src/engine/Actor.java</file>
         </group>

@@ -1,5 +1,6 @@
 package engine;
 
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.geom.Polygon;
@@ -30,8 +31,6 @@ public class Enemy implements Entity {
     private float GRAVITY = 0.0098f;
     private float TERM_VELOCITY = 0.2f;
     
-    enum Behaviour{ STEAM, ALIEN, CYBER };
-    
     public Enemy(Vector2f pos, Vector2f dim, int dir){
         this.SetPos(pos);
         this.SetDim(dim);
@@ -40,15 +39,36 @@ public class Enemy implements Entity {
         foot = new Foot(new Vector2f(pos.x, pos.y + dim.y), new Vector2f(dim.x, 4));
     }
     
-    public void Update(GameContainer gc, int delta){
-        
+    public void Update(GameContainer gc, Actor act, Polygon bounds, ArrayList<Block> groundTile, int delta){
+        //TODO AI 
+            if(this.position.x < act.GetPos().x + act.GetDim().x + 128 && position.y == act.GetPos().y){
+                //move towards 
+                this.position.x += SPEED * delta;
+                if(!bounds.contains(poly)){
+                    this.position.x -= SPEED * delta;
+                }
+                SetDirection(0);
+                poly.setX(position.x);
+                foot.SetX(position.x);
+            }else if( this.position.x > act.GetPos().x + 128 && position.y == act.GetPos().y){
+                this.position.x -= SPEED * delta; 
+                if(!bounds.contains(poly)){
+                    this.position.x += SPEED * delta;
+                }
+                SetDirection(2);
+                poly.setX(position.x);
+                foot.SetX(position.x);
+            }
     }
     
     public void Render(Graphics g){
         if(debugRender){
             g.setColor(Color.red);
+            g.fill(poly);
+            g.draw(poly);
+            foot.Render(g);
         }
-        g.drawImage(masterImage, position.x, position.y);
+        //g.drawImage(masterImage, position.x, position.y);
     }
     
         public void InitSpriteSheet(SpriteSheet sprite){
@@ -57,7 +77,7 @@ public class Enemy implements Entity {
         totalFrame = spriteSheet.getHorizontalCount();
         masterImage = spriteSheet.getSprite(currentFrame, d);
     }
-    
+   
     private void UpdateSpriteSheet(int delta){
         time+= (float)delta/1000;
         if(time > timeSinceLastChange + 0.1f){
@@ -84,7 +104,11 @@ public class Enemy implements Entity {
     public void SetDim(Vector2f dim) {
        this.dimension = dim;
     }
-
+    
+    public void DebugRender(boolean val){
+        debugRender = val;
+    }
+    
     @Override
     public void InitPoly() {
         poly = new Polygon(new float[]{
@@ -152,6 +176,18 @@ public class Enemy implements Entity {
     @Override
     public int GetDirection() {
         return direction;
+    }
+    
+    public int getHealth(){
+        return health;
+    }
+    
+    public boolean IsOnGround(){
+        return onGround;
+    }
+    
+    public Foot GetFoot(){
+        return foot;
     }
     
     public boolean HasIntersected(Entity other){
